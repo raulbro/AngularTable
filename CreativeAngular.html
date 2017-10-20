@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script><script src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<style type="text/css">
+		.search{
+		  margin-left:10px;
+		}
+		header {
+			position:absolute;
+			width:100%;
+			height:60px;  
+			background:#6cf;
+			text-align: center;
+		}
+		footer {
+		   position:absolute;
+		   bottom:0;
+		   width:100%;
+		   height:60px;   /* Height of the footer */
+		   background:#6cf;
+		}
+		form, table {
+			margin-left:10px;
+		}
+	</style>
+	<script type="text/javascript">
+		function cs260($scope){
+		  $scope.rows = ['Raul','Laura','Benjamin'];
+		  $scope.temp = false;
+		  
+		  $scope.plural = function (tab) {
+		    return tab.length > 1 ? 's': ''; 
+		  };
+
+		  $scope.addRow = function() {
+		    $scope.temp = false;
+		    $scope.addName="";
+		  };
+		  
+		  $scope.deleteRow = function(row) {
+		    $scope.rows.splice($scope.rows.indexOf(row),1);
+		  };
+		  
+		  $scope.addTemp = function() {
+		    if($scope.temp){ 
+		      $scope.rows.pop(); 
+		    }
+		    else if($scope.addName){
+		     $scope.temp = true;
+		    }
+		    if($scope.addName) {
+		      $scope.rows.push($scope.addName);
+		    }
+		    else {
+		      $scope.temp = false;
+		    }
+		  };
+		  
+		  $scope.isTemp = function(i){
+		    return i==$scope.rows.length-1 && $scope.temp;
+		  };
+		}
+	</script>
+	<meta charset=utf-8 />
+	<title>Creative Angular</title>
+</head>
+<body ng-controller="cs260">
+	<header>
+		<h1>Raul Rodriguez Creative 3</h1>
+	</header><br><br><br><br>
+	<form class="form-horizontal">
+		<span ng-class="{'input-append':addName}">
+			<input id="add" type="text" placeholder="Add Row" ng-model="addName" ng-change="addTemp()"/>
+			<input type="submit" class="btn btn-primary" ng-click="addRow()" ng-show="addName" value="+ add"/>
+		</span>
+		<span class="search input-prepend" ng-class="{'input-append':search}">
+			<span class="add-on"><i class="glyphicon glyphicon-search"></i></span>
+			<input type="text" class="span2"  placeholder="Search" ng-model="search">
+			<button type="submit" class="btn btn-secondary" ng-click="search=''" ng-show="search" value="+ add"><i  style="color: white" class="glyphicon glyphicon-remove "></i></button>
+		</span>
+	</form>
+	<br>
+	<span style="margin-left:10px;"> Rows {{rows.length}}</span>
+	<table  class="table table-striped">
+		<tr ng-repeat="row in rows | filter : search"  ng-class="{'muted':isTemp($index)}">
+			<td>{{$index+1}}</td>
+			<td>{{row}}</td>
+			<td>
+				<button class="btn btn-danger" ng-click="deleteRow(row)" ng-hide="isTemp($index)"><i class="glyphicon glyphicon-trash icon-white"></i></button>
+			</td>
+		</tr>
+	</table>
+
+	<footer>
+		<h3 class="text-center">Raul Rodriguez - Creative Assignment #3</h3>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>
